@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font: 14px "Century Gothic", Futura, sans-serif;
+            margin: 20px;
+        }
+        ol, ul {
+            padding-left: 30px; 
+        }
+        .borad-row:after{
+            clear: both;
+            content: "";
+            display: table;
+        }
+        .status{
+            margin-bottom: 10px;
+        }
+        .squaer{
+            background: #fff;
+            border: 1px solid #999;
+            float: left;
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 34px;
+            height: 34px;
+            margin-right: -1px;
+            margin-top: -1px;
+            padding: 0;
+            text-align: center;
+            width: 34px;
+        }   
+        .square:focus {
+            outline: none;
+        }
+        .kbd-navigation .square:focus {
+            background: #ddd;
+        }
+        .game {
+            display: flex;
+            flex-direction: row;
+        }
+        .game-info {
+            margin-left: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script src="text/babel">
+        class Square extends React.Component {
+            render() {
+                return (
+                    <button className="squaer">
+                    {/* TODO */}
+                    </button>
+                )
+            }
+        }
+        class Borad extends React.Component {
+            renderSquaer(i){
+                return <Square />
+            }
+            render() {
+                const status = 'Next player: X'
+                return (
+                   <div>
+                        <div>
+                            <div className="status">{status}</div>
+                        </div>
+                        <div className="borad-row">
+                            {this.renderSquaer(1)}
+                            {this.renderSquaer(2)}
+                            {this.renderSquaer(3)}
+                        </div>
+                        <div className="borad-row">
+                            {this.renderSquaer(4)}
+                            {this.renderSquaer(5)}
+                            {this.renderSquaer(6)}
+                        </div>
+                        <div className="borad-row">
+                            {this.renderSquaer(7)}
+                            {this.renderSquaer(8)}
+                            {this.renderSquaer(9)}
+                        </div>
+                    </div>
+                )
+            }
+        }
+        class Game extends React.Component {
+            render() {
+                <div className="game">
+                    <div className="game-board">
+                        <Borad />
+                    </div>
+                    <div className="game-info">
+                        <div>{/* status */}</div>
+                        <ol>{/* TODO */}</ol>
+                    </div>
+                </div>
+            }
+        }
+        ReactDOM.render(<Game/>,document.getElementById('test'))
+    </script>
+</body>
+
+</html>

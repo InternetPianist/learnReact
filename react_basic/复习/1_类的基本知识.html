@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1_类的基本知识</title>
+</head>
+<body>
+    <script type="text/javascript">
+    /*
+        总结：
+            1.类中的构造器不是必须写的，要对实例进行一些初始化的操作。如添加指定属性时才写
+            2.如果A类型继承了B类，且A类写了构造器，那么A类构造器中的super是必须调用的
+            3.类中所定义的方法，都是放在了类的原型的对象上，供实例使用
+    */ 
+
+    // 创建一个Person类
+        class Person {
+            // 构造器方法
+            constructor(name,age) {
+                // 构造器的this指向? —— 被创建的实例对象
+                this.name = name
+                this.age = age
+            }
+            // 一般方法
+            speak(){
+                // speak()方法放在了哪里？—— 类的原型对象上，供实例使用
+                // 通过Person实例调用speak时，speak中的this就是Person实例
+                console.log(`我叫${this.name},我年龄是${this.age}`);
+            }
+        }
+        // const p1 = new Person('Tom',19)
+        // const p2 = new Person('Jack',29)
+        // p1.speak()
+        // p2.speak()
+        // p1.speak.call({name:11,age:22})
+        class Student extends Person{
+            static height= 175
+            constructor(name,age,garde){
+                super(name,age)
+                this.garde = garde
+            }
+            // 重写从父类继承过来的方法
+            speak() {
+                console.log(`我叫${this.name},我的年龄是${this.age},我读的是${this.garde}`)
+            }
+            study() {
+                // study方法写在了哪里？——类的原型对象上，供实例使用
+                // 通过Student实例调用study时，study中的this就是Student实例
+                console.log('我爱学习')
+            }
+        }
+        console.log(Student.height)
+
+        const s1 = new Student('小张',15,'高一')
+        class Car {
+            constructor(name,price) {
+                this.name = name
+                this.price = price
+                // this.wheel = 4
+                // new.target 一般用于构造函数中 返回new命令作用于 的构造函数
+                // console.log(new.target)
+            }
+            // 类中可以直接写赋值语句，如下代码的含义是：给Car的实例对象添加一个属性，名为a，值为1
+            // a = 1
+            wheel = 4
+            // static 静态属性 实例不会添加静态属性也不会继承静态属性 静态属性只有类本身才能访问(能够被继承给子类使用,子类的实例无法访问)
+            static demo = 666
+        }
+        Car.props = 1 // 在类中设置属性
+        console.log(Car.demo)
+        console.log(Car.props) // 获取类中的属性
+        const c1 = new Car('奔驰C63',93)
+        const c2 = new Car('宝马X6',78)
+        console.log(c1)
+        console.log(c2)
+    </script>
+</body>
+</html>

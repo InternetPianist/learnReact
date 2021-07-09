@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04_getSnapshotBeforeUpdate</title>
+    <style>
+        .list{
+            width: 200px;
+            height: 150px;
+            background-color: paleturquoise;
+            overflow: auto;
+        }
+        .news{
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/17.0.1/react.development.js"></script>
+    <!-- 引入react-dom,用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/17.0.1/react-dom.development.js"></script>
+    <!-- 引入babel，用于jsx转为js -->
+    <script type="text/javascript" src="../js/17.0.1/babel.min.js"></script>
+    <script type="text/babel">
+        class NewList extends React.Component {
+            state={newArr: []}
+            componentDidMount() {
+                setInterval(() => {
+                    // 获取原状态
+                    const {newArr} = this.state
+                    // 模拟一条新闻
+                    const news = '新闻' + (newArr.length+1)
+                    this.setState({newArr: [news,...newArr]})
+                },1000)
+            }
+            getSnapshotBeforeUpdate() {
+                return this.list.scrollHeight
+            }
+            componentDidUpdate(prevProps,prevState,height) {
+                // 持续有新的高度增加，就持续累加距离顶部距离
+                this.list.scrollTop += this.list.scrollHeight - height
+            }
+            render() {
+                return (
+                    <div className="list" ref={(c) => this.list = c}>
+                        {
+                            this.state.newArr.map((item,index) => {
+                                return <div className="news" key={index}>{item}</div>
+                            })
+                        }
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<NewList/>,document.getElementById('test'))
+    </script>
+</body>
+</html>
